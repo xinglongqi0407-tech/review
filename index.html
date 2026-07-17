@@ -465,6 +465,12 @@
       background: var(--soft);
       box-shadow: none;
       border: 1px solid rgba(234, 222, 209, .78);
+      cursor: zoom-in;
+    }
+
+    .featured-card:focus-visible {
+      outline: 3px solid rgba(255, 107, 26, .5);
+      outline-offset: 3px;
     }
 
     .featured-media {
@@ -595,6 +601,7 @@
     }
 
     .work-card {
+      margin: 0;
       overflow: hidden;
       border-radius: var(--radius);
       background: var(--paper);
@@ -602,11 +609,18 @@
       transition: transform .2s ease, box-shadow .2s ease;
       content-visibility: auto;
       contain-intrinsic-size: 300px 280px;
+      cursor: zoom-in;
     }
 
-    .work-card:hover {
+    .work-card:hover,
+    .work-card:focus-visible {
       transform: translateY(-2px);
       box-shadow: 0 16px 32px rgba(54, 35, 18, .12);
+    }
+
+    .work-card:focus-visible {
+      outline: 3px solid rgba(255, 107, 26, .5);
+      outline-offset: 3px;
     }
 
     .work-thumb {
@@ -643,6 +657,27 @@
       background: rgba(31, 27, 23, .82);
       font-size: 11px;
       font-weight: 950;
+    }
+
+    .zoom-hint {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, .9);
+      font-size: 11px;
+      font-weight: 950;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .work-card:hover .zoom-hint,
+    .work-card:focus-visible .zoom-hint {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .work-body {
@@ -948,6 +983,137 @@
       white-space: nowrap;
     }
 
+    .lightbox {
+      width: min(1120px, calc(100% - 28px));
+      max-height: calc(100vh - 28px);
+      padding: 0;
+      border: 0;
+      border-radius: var(--radius);
+      color: var(--ink);
+      background: transparent;
+    }
+
+    .lightbox::backdrop {
+      background: rgba(31, 27, 23, .72);
+      backdrop-filter: blur(10px);
+    }
+
+    .lightbox-shell {
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: 0 32px 80px rgba(0, 0, 0, .26);
+    }
+
+    .lightbox-top {
+      min-height: 78px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .lightbox-kicker {
+      margin: 0 0 4px;
+      color: var(--orange-deep);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .lightbox-title {
+      margin: 0;
+      font-size: clamp(20px, 3vw, 30px);
+      line-height: 1.15;
+      font-weight: 950;
+    }
+
+    .lightbox-meta {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .icon-button,
+    .nav-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 999px;
+      color: var(--ink);
+      background: var(--soft);
+      cursor: pointer;
+      font-weight: 950;
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      flex: 0 0 auto;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .nav-button {
+      min-width: 44px;
+      height: 38px;
+      padding: 0 14px;
+      font-size: 20px;
+    }
+
+    .icon-button:hover,
+    .icon-button:focus-visible,
+    .nav-button:hover,
+    .nav-button:focus-visible,
+    .original-link:hover,
+    .original-link:focus-visible {
+      color: #fff;
+      background: var(--orange);
+      outline: 0;
+    }
+
+    .lightbox-media {
+      min-height: 320px;
+      max-height: 72vh;
+      padding: 18px;
+      display: grid;
+      place-items: center;
+      background: #f7efe8;
+    }
+
+    .lightbox-media img {
+      width: auto;
+      max-width: 100%;
+      max-height: calc(72vh - 36px);
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 18px 44px rgba(54, 35, 18, .14);
+    }
+
+    .lightbox-actions {
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--paper);
+      border-top: 1px solid var(--line);
+    }
+
+    .original-link {
+      min-height: 38px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      color: var(--orange-deep);
+      background: rgba(255, 107, 26, .1);
+      font-size: 13px;
+      font-weight: 950;
+    }
+
     .footer {
       width: min(var(--max), calc(100% - 40px));
       margin: 0 auto;
@@ -1138,6 +1304,31 @@
       .footer {
         flex-direction: column;
       }
+
+      .lightbox {
+        width: calc(100% - 16px);
+        max-height: calc(100vh - 16px);
+      }
+
+      .lightbox-top,
+      .lightbox-actions {
+        padding: 14px;
+      }
+
+      .lightbox-media {
+        min-height: 240px;
+        max-height: 62vh;
+        padding: 12px;
+      }
+
+      .lightbox-media img {
+        max-height: calc(62vh - 24px);
+      }
+
+      .original-link {
+        flex: 1;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -1171,7 +1362,7 @@
         <div class="hero-board-inner">
           <div class="board-title">
             <span>本月成果概览</span>
-            <strong>65+ 视觉素材，覆盖 4 类项目方向</strong>
+            <strong>45 个视觉素材，覆盖 4 类项目方向</strong>
           </div>
           <div class="board-stats" id="heroStats"></div>
           <div class="board-flow" aria-label="页面主线">
@@ -1195,7 +1386,7 @@
       <div class="overview-panel">
         <article class="overview-main">
           <h2>快速适应国内游戏视觉需求，完成多类型素材支持。</h2>
-          <p>完成传奇类、棋牌平台、微信游戏圈、周末签到活动等多项目视觉支持；产出约 65 个视觉素材，覆盖 banner、弹窗、活动图、游戏圈推广图等使用场景。</p>
+          <p>完成传奇类、棋牌平台、微信游戏圈、周末签到活动等多项目视觉支持；更新为 45 个精选视觉素材，覆盖 banner、弹窗、活动图、游戏圈推广图等使用场景。</p>
           <div class="overview-tags">
             <span>多规格静态交付</span>
             <span>多尺寸动效适配</span>
@@ -1216,7 +1407,7 @@
           <p class="eyebrow">Portfolio</p>
           <h2 class="section-title" id="portfolio-title">作品展示</h2>
         </div>
-        <p class="section-lead">作品区改为统一卡片与清晰分类：先看四类精选，再看完整 65 个作品库。</p>
+        <p class="section-lead">作品区改为统一卡片与清晰分类：先看四类精选，再看完整 45 个作品库；点击任一作品可查看原图。</p>
       </div>
       <div class="portfolio-wrap">
         <div class="featured-grid" id="featuredGrid" aria-label="精选作品"></div>
@@ -1285,9 +1476,32 @@
     <span>Visual output, workflow review, Q3 action plan</span>
   </footer>
 
+  <dialog class="lightbox" id="workLightbox" aria-labelledby="lightboxTitle">
+    <div class="lightbox-shell">
+      <div class="lightbox-top">
+        <div>
+          <p class="lightbox-kicker" id="lightboxCategory">作品预览</p>
+          <h3 class="lightbox-title" id="lightboxTitle">作品标题</h3>
+          <span class="lightbox-meta" id="lightboxMeta">格式信息</span>
+        </div>
+        <form method="dialog">
+          <button class="icon-button" type="submit" aria-label="关闭预览">×</button>
+        </form>
+      </div>
+      <div class="lightbox-media">
+        <img id="lightboxImage" alt="">
+      </div>
+      <div class="lightbox-actions">
+        <button class="nav-button" id="prevWork" type="button" aria-label="上一张">‹</button>
+        <a class="original-link" id="openOriginal" href="#" target="_blank" rel="noopener">打开原图</a>
+        <button class="nav-button" id="nextWork" type="button" aria-label="下一张">›</button>
+      </div>
+    </div>
+  </dialog>
+
   <script>
     const stats = [
-      { value: "65+", label: "视觉素材交付" },
+      { value: "45", label: "视觉素材交付" },
       { value: "4", label: "项目方向支持" },
       { value: "5", label: "核心尺寸适配" },
       { value: "30%", label: "Q3效率目标" }
@@ -1298,104 +1512,92 @@
         id: "legend",
         name: "传奇类素材",
         summary: "覆盖横幅、竖版、动效多尺寸，沉淀开服、福利、爆装、活动入口等主题经验。",
-        featured: "assets/gallery/传奇类1/1290_275.gif",
+        featured: "assets/gallery-current/传奇类1/1290_275.gif",
         featuredMeta: "GIF / 多尺寸动效",
         items: [
-          ["assets/gallery/传奇类1/1290_275.gif", "传奇类1 横幅动效", "1290×275 / GIF", "wide"],
-          ["assets/gallery/传奇类1/915_170.gif", "传奇类1 窄幅动效", "915×170 / GIF", "wide"],
-          ["assets/gallery/传奇类1/650_260(gif).gif", "传奇类1 中尺寸动效", "650×260 / GIF", "wide"],
-          ["assets/gallery/传奇类1/270_165.gif", "传奇类1 小规格入口", "270×165 / GIF", "wide"],
-          ["assets/gallery/传奇类1/230_505.jpg", "传奇类1 竖版广告", "230×505 / JPG", "poster"],
-          ["assets/gallery/传奇类1/每日活动.gif", "传奇类1 每日活动入口", "155×220 / GIF", "poster"],
-          ["assets/gallery/传奇类2/1290_275.gif", "传奇类2 横幅动效", "1290×275 / GIF", "wide"],
-          ["assets/gallery/传奇类2/915_170.gif", "传奇类2 窄幅动效", "915×170 / GIF", "wide"],
-          ["assets/gallery/传奇类2/650_260(gif).gif", "传奇类2 中尺寸动效", "650×260 / GIF", "wide"],
-          ["assets/gallery/传奇类2/270_165.gif", "传奇类2 小规格入口", "270×165 / GIF", "wide"],
-          ["assets/gallery/传奇类2/230_505.jpg", "传奇类2 竖版广告", "230×505 / JPG", "poster"]
+          ["assets/gallery-current/传奇类1/1290_275.gif", "传奇类1 横幅动效", "1290×275 / GIF", "wide"],
+          ["assets/gallery-current/传奇类1/915_170.gif", "传奇类1 窄幅动效", "915×170 / GIF", "wide"],
+          ["assets/gallery-current/传奇类1/650_260(gif).gif", "传奇类1 中尺寸动效", "650×260 / GIF", "wide"],
+          ["assets/gallery-current/传奇类1/270_165.gif", "传奇类1 小规格入口", "270×165 / GIF", "wide"],
+          ["assets/gallery-current/传奇类1/230_505.jpg", "传奇类1 竖版广告", "230×505 / JPG", "poster"],
+          ["assets/gallery-current/传奇类1/每日活动.gif", "传奇类1 每日活动入口", "GIF / 活动入口", "poster"],
+          ["assets/gallery-current/传奇类2/1290_275.gif", "传奇类2 横幅动效", "1290×275 / GIF", "wide"],
+          ["assets/gallery-current/传奇类2/915_170.gif", "传奇类2 窄幅动效", "915×170 / GIF", "wide"],
+          ["assets/gallery-current/传奇类2/650_260(gif).gif", "传奇类2 中尺寸动效", "650×260 / GIF", "wide"],
+          ["assets/gallery-current/传奇类2/270_165.gif", "传奇类2 小规格入口", "270×165 / GIF", "wide"],
+          ["assets/gallery-current/传奇类2/230_505.jpg", "传奇类2 竖版广告", "230×505 / JPG", "poster"]
         ]
       },
       {
         id: "poker",
         name: "棋牌平台广告",
         summary: "完成棋牌类 banner、弹窗、游戏推广图，多角色、多卖点和多入口规格并行交付。",
-        featured: "assets/gallery/棋牌平台广告/1290_276.jpg",
+        featured: "assets/gallery-current/棋牌平台广告/1290_276.jpg",
         featuredMeta: "JPG / Banner + 弹窗",
         items: [
-          ["assets/gallery/棋牌平台广告/1290_276.gif", "四冲横幅动效", "1290×276 / GIF", "wide"],
-          ["assets/gallery/棋牌平台广告/1290_276.jpg", "四冲横幅静态", "1290×276 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/1290-276.gif", "棋牌平台横幅动效", "1290×276 / GIF", "wide"],
-          ["assets/gallery/棋牌平台广告/650_260.gif", "四冲中尺寸动效", "650×260 / GIF", "wide"],
-          ["assets/gallery/棋牌平台广告/650_260.jpg", "四冲中尺寸静态", "650×260 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/650_260 (2).gif", "棋牌平台中尺寸动效", "650×260 / GIF", "wide"],
-          ["assets/gallery/棋牌平台广告/650_260 (2).jpg", "棋牌平台中尺寸静态", "650×260 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/650-260-宿松同心.jpg", "宿松同心推广图", "650×260 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/650-260-五人斗地主.jpg", "五人斗地主推广图", "650×260 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/680-275_宿松同心.png", "宿松同心横幅", "680×275 / PNG", "wide"],
-          ["assets/gallery/棋牌平台广告/680-275_五人斗地主.png", "五人斗地主横幅", "680×275 / PNG", "wide"],
-          ["assets/gallery/棋牌平台广告/680_275_包分.jpg", "包分横幅", "680×275 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/680_275_四副牌.jpg", "四副牌横幅", "680×275 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/680_275_无锡麻将.jpg", "无锡麻将横幅", "680×275 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/680_220_包分.jpg", "包分短横幅", "680×220 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/680_220_四副牌.jpg", "四副牌短横幅", "680×220 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/680_220_无锡麻将.jpg", "无锡麻将短横幅", "680×220 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/780_58.jpg", "顶部窄幅资源", "780×58 / JPG", "wide"],
-          ["assets/gallery/棋牌平台广告/155_220.jpg", "棋牌小弹窗静态", "155×220 / JPG", "poster"],
-          ["assets/gallery/棋牌平台广告/155-220_红中赖子.gif", "红中赖子小弹窗", "155×220 / GIF", "poster"],
-          ["assets/gallery/棋牌平台广告/155-220_宿松同心.gif", "宿松同心小弹窗", "155×220 / GIF", "poster"],
-          ["assets/gallery/棋牌平台广告/155-220_五人斗地主.gif", "五人斗地主小弹窗", "155×220 / GIF", "poster"],
-          ["assets/gallery/棋牌平台广告/720_1040 包分.png", "包分竖版弹窗", "720×1040 / PNG", "poster"],
-          ["assets/gallery/棋牌平台广告/720_1040 四副牌升级.png", "四副牌升级竖版", "720×1040 / PNG", "poster"],
-          ["assets/gallery/棋牌平台广告/720_1040_无锡麻将.png", "无锡麻将竖版弹窗", "720×1040 / PNG", "poster"],
-          ["assets/gallery/棋牌平台广告/逮狗腿_banner.gif", "逮狗腿 banner", "680×275 / GIF", "wide"],
-          ["assets/gallery/棋牌平台广告/逮狗腿_弹窗.webp", "逮狗腿弹窗", "WEBP / 弹窗", "popup"],
-          ["assets/gallery/棋牌平台广告/掼蛋_banner.gif", "掼蛋 banner", "680×275 / GIF", "wide"],
-          ["assets/gallery/棋牌平台广告/掼蛋_弹窗.webp", "掼蛋弹窗", "WEBP / 弹窗", "popup"],
-          ["assets/gallery/棋牌平台广告/合肥麻将_banner.gif", "合肥麻将 banner", "680×275 / GIF", "wide"],
-          ["assets/gallery/棋牌平台广告/合肥麻将_弹窗.webp", "合肥麻将弹窗", "WEBP / 弹窗", "popup"],
-          ["assets/gallery/棋牌平台广告/熟人麻将_banner.gif", "熟人麻将 banner", "680×275 / GIF", "wide"],
-          ["assets/gallery/棋牌平台广告/熟人麻将_弹窗.webp", "熟人麻将弹窗", "WEBP / 弹窗", "popup"],
-          ["assets/gallery/棋牌平台广告/四人斗地主_banner.gif", "四人斗地主 banner", "680×275 / GIF", "wide"],
-          ["assets/gallery/棋牌平台广告/四人斗地主_弹窗.webp", "四人斗地主弹窗", "WEBP / 弹窗", "popup"],
-          ["assets/gallery/棋牌平台广告/拖三_banner.gif", "拖三 banner", "680×275 / GIF", "wide"],
-          ["assets/gallery/棋牌平台广告/同心_弹窗.webp", "同心弹窗", "WEBP / 弹窗", "popup"],
-          ["assets/gallery/棋牌平台广告/510k.jpg", "510K 推广图", "JPG / 推广图", "wide"],
-          ["assets/gallery/棋牌平台广告/510k-680-275.gif", "510K 横幅动效", "680×275 / GIF", "wide"],
-          ["assets/gallery/棋牌平台广告/红赖.jpg", "红中赖子推广图", "JPG / 推广图", "wide"],
-          ["assets/gallery/棋牌平台广告/红赖-680-275.gif", "红中赖子横幅动效", "680×275 / GIF", "wide"]
+          ["assets/gallery-current/棋牌平台广告/1290_276.gif", "棋牌平台横幅动效 A", "1290×276 / GIF", "wide"],
+          ["assets/gallery-current/棋牌平台广告/1290_276.jpg", "棋牌平台横幅静态", "1290×276 / JPG", "wide"],
+          ["assets/gallery-current/棋牌平台广告/1290-276.gif", "棋牌平台横幅动效 B", "1290×276 / GIF", "wide"],
+          ["assets/gallery-current/棋牌平台广告/650_260.gif", "棋牌平台中尺寸动效 A", "650×260 / GIF", "wide"],
+          ["assets/gallery-current/棋牌平台广告/650_260 (2).gif", "棋牌平台中尺寸动效 B", "650×260 / GIF", "wide"],
+          ["assets/gallery-current/棋牌平台广告/680-275_宿松同心.png", "宿松同心横幅", "680×275 / PNG", "wide"],
+          ["assets/gallery-current/棋牌平台广告/680-275_五人斗地主.png", "五人斗地主横幅", "680×275 / PNG", "wide"],
+          ["assets/gallery-current/棋牌平台广告/680_275_包分.jpg", "包分横幅", "680×275 / JPG", "wide"],
+          ["assets/gallery-current/棋牌平台广告/680_275_四副牌.jpg", "四副牌横幅", "680×275 / JPG", "wide"],
+          ["assets/gallery-current/棋牌平台广告/680_275_无锡麻将.jpg", "无锡麻将横幅", "680×275 / JPG", "wide"],
+          ["assets/gallery-current/棋牌平台广告/680_220_包分.jpg", "包分短横幅", "680×220 / JPG", "wide"],
+          ["assets/gallery-current/棋牌平台广告/680_220_四副牌.jpg", "四副牌短横幅", "680×220 / JPG", "wide"],
+          ["assets/gallery-current/棋牌平台广告/155_220.jpg", "棋牌小弹窗静态", "155×220 / JPG", "poster"],
+          ["assets/gallery-current/棋牌平台广告/155-220_宿松同心.gif", "宿松同心小弹窗", "155×220 / GIF", "poster"],
+          ["assets/gallery-current/棋牌平台广告/720_1040 包分.png", "包分竖版弹窗", "720×1040 / PNG", "poster"],
+          ["assets/gallery-current/棋牌平台广告/720_1040 四副牌升级.png", "四副牌升级竖版", "720×1040 / PNG", "poster"],
+          ["assets/gallery-current/棋牌平台广告/720_1040_无锡麻将.png", "无锡麻将竖版弹窗", "720×1040 / PNG", "poster"],
+          ["assets/gallery-current/棋牌平台广告/逮狗腿_banner.gif", "逮狗腿 banner", "GIF / Banner", "wide"],
+          ["assets/gallery-current/棋牌平台广告/逮狗腿_弹窗.webp", "逮狗腿弹窗", "WEBP / 弹窗", "popup"],
+          ["assets/gallery-current/棋牌平台广告/掼蛋_弹窗.webp", "掼蛋弹窗", "WEBP / 弹窗", "popup"],
+          ["assets/gallery-current/棋牌平台广告/合肥麻将_弹窗.webp", "合肥麻将弹窗", "WEBP / 弹窗", "popup"],
+          ["assets/gallery-current/棋牌平台广告/熟人麻将_banner.gif", "熟人麻将 banner", "GIF / Banner", "wide"],
+          ["assets/gallery-current/棋牌平台广告/熟人麻将_弹窗.webp", "熟人麻将弹窗", "WEBP / 弹窗", "popup"],
+          ["assets/gallery-current/棋牌平台广告/四人斗地主_banner.gif", "四人斗地主 banner", "GIF / Banner", "wide"],
+          ["assets/gallery-current/棋牌平台广告/四人斗地主_弹窗.webp", "四人斗地主弹窗", "WEBP / 弹窗", "popup"],
+          ["assets/gallery-current/棋牌平台广告/拖三_banner.gif", "拖三 banner", "GIF / Banner", "wide"],
+          ["assets/gallery-current/棋牌平台广告/同心_弹窗.webp", "同心弹窗", "WEBP / 弹窗", "popup"],
+          ["assets/gallery-current/棋牌平台广告/510k-680-275.gif", "510K 横幅动效", "680×275 / GIF", "wide"],
+          ["assets/gallery-current/棋牌平台广告/红赖-680-275.gif", "红中赖子横幅动效", "680×275 / GIF", "wide"]
         ]
       },
       {
         id: "wechat",
         name: "微信游戏圈推广",
-        summary: "围绕七月福利周与夏日主题输出游戏圈推广图，强化活动氛围和领取动作。",
-        featured: "assets/gallery/微信游戏圈banner/夏日banner/918_576.jpg",
+        summary: "围绕夏日主题输出游戏圈推广图，强化季节氛围、游戏识别和活动点击动机。",
+        featured: "assets/gallery-current/微信游戏圈banner/夏日banner/918_576.jpg",
         featuredMeta: "JPG / 918×576",
         items: [
-          ["assets/gallery/918_576.jpg", "七月福利周主视觉", "918×576 / JPG", "wide"],
-          ["assets/gallery/微信游戏圈banner/夏日banner/918_576.jpg", "夏日福利周 banner", "918×576 / JPG", "wide"],
-          ["assets/gallery/微信游戏圈banner/夏日banner/逮狗腿-1.jpg", "逮狗腿夏日版 A", "918×576 / JPG", "wide"],
-          ["assets/gallery/微信游戏圈banner/夏日banner/逮狗腿-2.jpg", "逮狗腿夏日版 B", "918×576 / JPG", "wide"],
-          ["assets/gallery/微信游戏圈banner/夏日banner/掼蛋-1.jpg", "掼蛋夏日版 A", "918×576 / JPG", "wide"],
-          ["assets/gallery/微信游戏圈banner/夏日banner/掼蛋-2.jpg", "掼蛋夏日版 B", "918×576 / JPG", "wide"],
-          ["assets/gallery/微信游戏圈banner/夏日banner/贵阳捉鸡-1.jpg", "贵阳捉鸡夏日版 A", "918×576 / JPG", "wide"],
-          ["assets/gallery/微信游戏圈banner/夏日banner/贵阳捉鸡-2.jpg", "贵阳捉鸡夏日版 B", "918×576 / JPG", "wide"],
-          ["assets/gallery/微信游戏圈banner/夏日banner/熟人麻将-1.jpg", "熟人麻将夏日版 A", "918×576 / JPG", "wide"],
-          ["assets/gallery/微信游戏圈banner/夏日banner/熟人麻将-2.jpg", "熟人麻将夏日版 B", "918×576 / JPG", "wide"]
+          ["assets/gallery-current/微信游戏圈banner/夏日banner/918_576.jpg", "夏日游戏圈主视觉", "918×576 / JPG", "wide"],
+          ["assets/gallery-current/微信游戏圈banner/夏日banner/逮狗腿-1.jpg", "逮狗腿夏日版", "918×576 / JPG", "wide"],
+          ["assets/gallery-current/微信游戏圈banner/夏日banner/掼蛋-1.jpg", "掼蛋夏日版", "918×576 / JPG", "wide"],
+          ["assets/gallery-current/微信游戏圈banner/夏日banner/熟人麻将-1.jpg", "熟人麻将夏日版", "918×576 / JPG", "wide"]
         ]
       },
       {
         id: "checkin",
         name: "周末签到活动",
         summary: "支持活动弹窗与签到视觉，完成界面场景下的活动包装和奖励信息表达。",
-        featured: "assets/gallery/周末签到活动图_20260716/效果图.png",
+        featured: "assets/gallery-current/周末签到活动图_20260716/效果图.png",
         featuredMeta: "PNG / 活动弹窗",
         items: [
-          ["assets/gallery/周末签到活动图_20260716/效果图.png", "周末签到活动效果图", "PNG / 弹窗效果", "popup"],
-          ["assets/gallery/周末签到活动图_20260716/3天-切图.png", "三日签到奖励切图", "PNG / 活动切图", "popup"],
-          ["assets/gallery/周末签到活动图_20260716/bj.png", "周末签到活动背景", "PNG / 背景图", "wide"]
+          ["assets/gallery-current/周末签到活动图_20260716/效果图.png", "周末签到活动效果图", "PNG / 弹窗效果", "popup"]
         ]
       }
     ];
+
+    const allWorks = categories.flatMap(category => category.items.map(([src, title, meta, shape]) => ({
+      src,
+      title,
+      meta,
+      shape,
+      category: category.name
+    })));
 
     const highlights = [
       "适应速度较快，能够根据不同游戏品类调整视觉风格。",
@@ -1462,18 +1664,20 @@
     }
 
     function renderFeatured() {
-      document.querySelector("#featuredGrid").innerHTML = categories.map(category => `
-        <article class="featured-card">
+      document.querySelector("#featuredGrid").innerHTML = categories.map(category => {
+        const workIndex = allWorks.findIndex(work => work.src === category.featured);
+        return `
+        <article class="featured-card" role="button" tabindex="0" data-work-index="${workIndex}" aria-label="查看${category.name}精选作品原图">
           <div class="featured-media">
             <img src="${category.featured}" alt="${category.name}精选作品" loading="lazy" decoding="async">
           </div>
           <div class="featured-body">
-            <span>${category.featuredMeta}</span>
+            <span>${category.featuredMeta} / 点击查看原图</span>
             <h3>${category.name}</h3>
             <p>${category.summary}</p>
           </div>
-        </article>
-      `).join("");
+        </article>`;
+      }).join("");
     }
 
     function fileType(path) {
@@ -1509,21 +1713,80 @@
             <span class="count-chip">${category.items.length} 个作品</span>
           </div>
           <div class="work-grid">
-            ${category.items.map(([src, title, meta, shape]) => `
-              <figure class="work-card">
+            ${category.items.map(([src, title, meta, shape]) => {
+              const workIndex = allWorks.findIndex(work => work.src === src);
+              return `
+              <figure class="work-card" role="button" tabindex="0" data-work-index="${workIndex}" aria-label="查看${title}原图">
                 <div class="work-thumb ${shape}">
                   <span class="file-badge">${fileType(src)}</span>
+                  <span class="zoom-hint">原图</span>
                   <img src="${src}" alt="${title}" loading="lazy" decoding="async">
                 </div>
                 <figcaption class="work-body">
                   <strong>${title}</strong>
                   <span>${meta}</span>
                 </figcaption>
-              </figure>
-            `).join("")}
+              </figure>`;
+            }).join("")}
           </div>
         </section>
       `).join("");
+    }
+
+    let currentWorkIndex = 0;
+
+    function lightboxElements() {
+      return {
+        dialog: document.querySelector("#workLightbox"),
+        image: document.querySelector("#lightboxImage"),
+        category: document.querySelector("#lightboxCategory"),
+        title: document.querySelector("#lightboxTitle"),
+        meta: document.querySelector("#lightboxMeta"),
+        original: document.querySelector("#openOriginal")
+      };
+    }
+
+    function setLightboxWork(index) {
+      currentWorkIndex = (index + allWorks.length) % allWorks.length;
+      const work = allWorks[currentWorkIndex];
+      const elements = lightboxElements();
+      elements.image.src = work.src;
+      elements.image.alt = work.title;
+      elements.category.textContent = work.category;
+      elements.title.textContent = work.title;
+      elements.meta.textContent = `${work.meta} / ${fileType(work.src)}`;
+      elements.original.href = work.src;
+    }
+
+    function openLightbox(index) {
+      const elements = lightboxElements();
+      setLightboxWork(index);
+      if (typeof elements.dialog.showModal === "function") {
+        elements.dialog.showModal();
+      } else {
+        elements.dialog.setAttribute("open", "");
+      }
+    }
+
+    function bindWorkPreview() {
+      document.querySelectorAll("[data-work-index]").forEach(card => {
+        const index = Number(card.dataset.workIndex);
+        card.addEventListener("click", () => openLightbox(index));
+        card.addEventListener("keydown", event => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openLightbox(index);
+          }
+        });
+      });
+
+      document.querySelector("#prevWork").addEventListener("click", () => setLightboxWork(currentWorkIndex - 1));
+      document.querySelector("#nextWork").addEventListener("click", () => setLightboxWork(currentWorkIndex + 1));
+      document.querySelector("#workLightbox").addEventListener("click", event => {
+        if (event.target.id === "workLightbox") {
+          event.currentTarget.close();
+        }
+      });
     }
 
     function renderLists() {
@@ -1554,6 +1817,7 @@
     renderFilters();
     renderGallery();
     renderLists();
+    bindWorkPreview();
   </script>
 </body>
 </html>
