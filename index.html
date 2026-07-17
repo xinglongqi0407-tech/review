@@ -710,23 +710,147 @@
 
     .plan-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(300px, .42fr);
-      gap: 18px;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .q3-hero-card,
+    .goal-card,
+    .pipeline,
+    .target-card {
+      border-radius: var(--radius);
+    }
+
+    .q3-hero-card {
+      position: relative;
+      min-height: 360px;
+      grid-column: span 5;
+      overflow: hidden;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      background: var(--orange);
+      box-shadow: var(--shadow);
+    }
+
+    .q3-hero-card::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      bottom: -90px;
+      width: 260px;
+      height: 260px;
+      background: rgba(255, 255, 255, .16);
+      transform: rotate(14deg);
+    }
+
+    .q3-hero-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .plan-kicker {
+      margin: 0 0 14px;
+      color: rgba(255, 255, 255, .78);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+
+    .q3-hero-card h3 {
+      max-width: 460px;
+      margin: 0;
+      font-size: clamp(32px, 4.2vw, 52px);
+      line-height: 1.02;
+      font-weight: 950;
+    }
+
+    .q3-hero-card p:last-child {
+      max-width: 440px;
+      margin: 18px 0 0;
+      color: rgba(255, 255, 255, .86);
+      font-size: 15px;
+      font-weight: 750;
+    }
+
+    .size-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 30px;
+    }
+
+    .size-chip {
+      padding: 8px 10px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(31, 27, 23, .18);
+      font-size: 12px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .plan-goals {
+      grid-column: span 7;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .goal-card {
+      min-height: 150px;
+      padding: 20px;
+      background: var(--paper);
+      box-shadow: 0 16px 34px rgba(54, 35, 18, .07);
+    }
+
+    .goal-card:last-child {
+      grid-column: span 2;
+      min-height: 126px;
+      background: #fff7ef;
+    }
+
+    .goal-card span {
+      display: inline-flex;
+      margin-bottom: 12px;
+      color: var(--orange-deep);
+      font-size: 12px;
+      font-weight: 950;
+    }
+
+    .goal-card strong {
+      display: block;
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 950;
+    }
+
+    .goal-card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 750;
     }
 
     .pipeline {
+      grid-column: span 8;
       padding: 28px;
-      background: var(--paper);
+      background: #fffaf6;
     }
 
     .pipeline h3 {
       margin: 0;
-      font-size: clamp(26px, 3.4vw, 42px);
-      line-height: 1.1;
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.12;
       font-weight: 950;
     }
 
     .pipeline p {
+      max-width: 760px;
       margin: 12px 0 0;
       color: var(--muted);
       font-weight: 700;
@@ -775,6 +899,7 @@
     }
 
     .target-card {
+      grid-column: span 4;
       padding: 28px;
       border-radius: var(--radius);
       background: var(--ink);
@@ -787,6 +912,13 @@
       font-size: 28px;
       line-height: 1.15;
       font-weight: 950;
+    }
+
+    .target-card p {
+      margin: -8px 0 18px;
+      color: rgba(255, 255, 255, .66);
+      font-size: 13px;
+      font-weight: 750;
     }
 
     .target-list {
@@ -839,6 +971,8 @@
       .overview-main,
       .overview-side,
       .review-card,
+      .q3-hero-card,
+      .goal-card,
       .pipeline,
       .target-card {
         animation: rise .55s ease both;
@@ -861,6 +995,13 @@
       .overview-panel,
       .plan-layout {
         grid-template-columns: 1fr;
+      }
+
+      .q3-hero-card,
+      .plan-goals,
+      .pipeline,
+      .target-card {
+        grid-column: 1 / -1;
       }
 
       .hero-board {
@@ -965,6 +1106,19 @@
       .work-grid,
       .steps {
         grid-template-columns: 1fr;
+      }
+
+      .q3-hero-card {
+        min-height: 320px;
+        padding: 24px;
+      }
+
+      .plan-goals {
+        grid-template-columns: 1fr;
+      }
+
+      .goal-card:last-child {
+        grid-column: span 1;
       }
 
       .work-thumb,
@@ -1100,16 +1254,26 @@
           <p class="eyebrow">Q3 Roadmap</p>
           <h2 class="section-title" id="plan-title">Q3 AI 提效计划</h2>
         </div>
-        <p class="section-lead">围绕 AI 工具提效，探索一键生成多尺寸传奇类动效素材流程。</p>
+        <p class="section-lead">围绕 AI 工具提效，探索一键生成多尺寸传奇类动效素材流程，把单张制作经验沉淀为可复用方法。</p>
       </div>
       <div class="plan-layout">
+        <article class="q3-hero-card">
+          <div>
+            <p class="plan-kicker">Core objective</p>
+            <h3>一套主视觉，批量扩展多尺寸动效</h3>
+            <p>以传奇类动效素材为试点，把开服、福利、爆装、活动入口等常见主题沉淀为可复用模板。</p>
+          </div>
+          <div class="size-strip" id="sizeStrip"></div>
+        </article>
+        <div class="plan-goals" id="planGoals"></div>
         <article class="pipeline">
           <h3>文案输入 - 画面生成 - 尺寸适配 - 动效导出</h3>
-          <p>以单套主视觉为基础，探索 AI 辅助自动适配 1290×275、915×170、650×260、270×165、230×505 等常用尺寸。</p>
+          <p>建立标准流程，减少单张制作和人工适配的重复消耗，让多尺寸动效交付更稳定。</p>
           <div class="steps" id="steps"></div>
         </article>
         <aside class="target-card">
           <h3>量化目标</h3>
+          <p>Q3 以可复用、可批量、可验证为核心验收口径。</p>
           <ul class="target-list" id="targets"></ul>
         </aside>
       </div>
@@ -1253,6 +1417,36 @@
       ["动效导出", "统一节奏、帧数和质检标准，提升批量交付稳定性。"]
     ];
 
+    const planGoals = [
+      {
+        label: "01 AI 模板库",
+        title: "不少于 8 套动态视觉模板",
+        text: "围绕开服、福利、爆装、活动入口等常见主题，沉淀可复用画面结构。"
+      },
+      {
+        label: "02 一键多尺寸",
+        title: "主视觉自动适配常用规格",
+        text: "以单套主视觉为基础，探索 AI 辅助扩展横幅、小图、竖版广告位。"
+      },
+      {
+        label: "03 批量效率",
+        title: "常规动效效率提升约 30%",
+        text: "把文案输入、画面生成、尺寸适配、动效导出串成稳定流程。"
+      },
+      {
+        label: "04 提示词质检",
+        title: "20 条提示词与质检规范",
+        text: "覆盖角色、武器、光效、标题字效、按钮、动效节奏等关键要素。"
+      },
+      {
+        label: "05 试点案例",
+        title: "完成 3 组多尺寸动效验证",
+        text: "验证画面统一性、尺寸适配质量和交付稳定性，形成可复盘案例。"
+      }
+    ];
+
+    const sizeSpecs = ["1290×275", "915×170", "650×260", "270×165", "230×505"];
+
     const targets = [
       ["8套", "可复用动态视觉模板"],
       ["20条", "传奇类视觉提示词"],
@@ -1335,6 +1529,14 @@
     function renderLists() {
       document.querySelector("#highlights").innerHTML = highlights.map(item => `<li>${item}</li>`).join("");
       document.querySelector("#improvements").innerHTML = improvements.map(item => `<li>${item}</li>`).join("");
+      document.querySelector("#sizeStrip").innerHTML = sizeSpecs.map(size => `<span class="size-chip">${size}</span>`).join("");
+      document.querySelector("#planGoals").innerHTML = planGoals.map(goal => `
+        <article class="goal-card">
+          <span>${goal.label}</span>
+          <strong>${goal.title}</strong>
+          <p>${goal.text}</p>
+        </article>
+      `).join("");
       document.querySelector("#steps").innerHTML = steps.map((step, index) => `
         <div class="step">
           <span>${String(index + 1).padStart(2, "0")}</span>
